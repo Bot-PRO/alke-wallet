@@ -1,0 +1,15 @@
+/* menu principal */
+
+.seccion-saldoDisponible{
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+}
+
+.div-contenedor-menu{
+    background: linear-gradient(135deg, #0b0f19 30%, #1e1b4b 100%);
+    box-shadow: 1px 1px 20px rgb(238, 235, 235);
+    max-width: 470px;
+    height: auto;
+}
+
+
+/* fin menu principal */
