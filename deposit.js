@@ -3,12 +3,14 @@ $(window).on('load', function() {
 });
 
 //documento ready para que se ejecute el codigo despues de que el documento html este listo
-$(document).ready(function(evento){
-    evento.preventDefault();
+$(document).ready(function(){
+    
     
     // del <-menu--- a los diferentes html --> deposit, sendmoney, transaction.
+	console.log("probando");
 
     $("#btn-deposit").on("click", function(){
+		console.log("entro");
         window.location.href = "deposit.html";
     });
     $("#btn-send").on("click", function(){
