@@ -3,7 +3,7 @@ $(window).on('load', function() {
 });
 
 //documento ready para que se ejecute el codigo despues de que el documento html este listo
-$(document).ready(function(){
+$(document).ready(function(evento){
     evento.preventDefault();
     
     // del <-menu--- a los diferentes html --> deposit, sendmoney, transaction.
