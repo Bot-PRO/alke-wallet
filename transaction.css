@@ -1,0 +1,79 @@
+/* sendMoney */
+.btn-principal{
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: aliceblue;
+}
+.btn-principal:hover{
+    background-color: rgba(255,255,255,0.2);
+    color: aliceblue;
+    border-radius: 10px;
+}
+
+.btn-agregar-contacts{
+    background-color: rgba(255,255,255,0.1);
+    color: aliceblue;
+    border-radius: 7px;
+    border: none;
+}
+.btn-agregar-contacts:hover{
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.2);
+    color: aliceblue;
+}
+
+.div-form{
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    box-shadow: 1px 1px 20px rgb(249, 247, 247);
+}
+.list-group-select:hover{
+    background-color: burlywood;
+}
+
+.grupo-form{
+    background:  linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    border-radius: 10px;
+    
+    
+}
+
+.button-contact{
+    background: linear-gradient(135deg, #0b0f19 30%, #1e1b4b 100%);
+    cursor: pointer;
+    background-color: #0a0f1d;
+    border: none;
+	border-radius: 15px;
+    
+}
+
+.button-contact:hover{
+    background: linear-gradient(5deg, #0b0f19 50%, #1e1b4b 100%);
+    border-radius: 10px;
+	
+
+
+}
+
+.contact-name{
+    color: white;
+    
+}
+
+.contact-name-small{
+    color: white;
+}
+
+.alias-circle{
+    width: 40px;
+    height: 40px;
+    font-weight: bold;
+    font-size: 1rem;
+    background: linear-gradient(135deg, #13134d, #4b4d55);
+    color: antiquewhite;
+}
+
+
+
+/* fin sendMoney */
