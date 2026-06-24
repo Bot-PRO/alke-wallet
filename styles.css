@@ -1,7 +1,6 @@
 /* Global */
 body{
-    background:  linear-gradient(135deg, #020617 0%, #0f172a 100%);
-    /* Reglas nuevas */
+    /* Transiciones */
     opacity: 0;
     transition: opacity 0.25s ease-in;
 }

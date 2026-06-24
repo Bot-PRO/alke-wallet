@@ -1,26 +1,29 @@
 /* sendMoney */
+/*---  boton de buscar contactos  y guardar  contactos ---*/
 .btn-principal{
-    background-color: rgba(255,255,255,0.1);
-    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
     color: aliceblue;
 }
 .btn-principal:hover{
+    border-radius: 8px;
     background-color: rgba(255,255,255,0.2);
     color: aliceblue;
-    border-radius: 10px;
+    box-shadow: 1px 1px 5px rgba(247, 244, 244, 0.27);
 }
 
-.btn-agregar-contacts{
-    background-color: rgba(255,255,255,0.1);
-    color: aliceblue;
-    border-radius: 7px;
-    border: none;
-}
-.btn-agregar-contacts:hover{
+.buscar-contacto{
+    background-color: rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-    background-color: rgba(255,255,255,0.2);
-    color: aliceblue;
+    
 }
+.buscar-contacto:hover{
+    border-radius: 8px;
+    background-color: rgba(255,255,255,0.3);
+    
+    
+}
+
 
 .div-form{
     width: 100%;
@@ -32,48 +35,102 @@
     background-color: burlywood;
 }
 
+/* el cuerpo del formulario  */
 .grupo-form{
-    background:  linear-gradient(135deg, #020617 0%, #0f172a 100%);
+    background:  transparent;
+    max-width: 500px;
+}
+
+
+
+.li-contacto{
+    min-width: 300px;
+
+}
+
+/*  el listado de contactos */
+.lista-contactos{
+    max-height: 197px;
+    min-height: 190px;
+    overflow-y: auto;
+    scrollbar-width: none;
     border-radius: 10px;
-    
+
     
 }
+/* ocultar la barra-scroll */
+#contacts-list::-webkit-scrollbar{
+    display: none;
+}
+.results-container{
+    border-radius: 10px;
+    width: 100%;
+}
+
+
+/* el boton que es el usuario agregado */
 
 .button-contact{
     background: linear-gradient(135deg, #0b0f19 30%, #1e1b4b 100%);
-    cursor: pointer;
-    background-color: #0a0f1d;
     border: none;
-	border-radius: 15px;
-    
-}
-
-.button-contact:hover{
-    background: linear-gradient(5deg, #0b0f19 50%, #1e1b4b 100%);
     border-radius: 10px;
-	
-
-
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Sombra exterior que los despega del fondo */
+    box-shadow: 8px 8px 16px  #0b0f19, 
+        -8px -8px 16px #1e1b4b;
 }
 
-.contact-name{
-    color: white;
-    
-}
+/* cuando el mouse pasa por encima */
+.button-contact:hover{
+    background: linear-gradient(300deg, #0f0d27 30% ,#060606 100%);
+    border-radius: 8px;
+    transform: translateY(-5px);
+    box-shadow: 12px 12px 20px #011b48, 
+        -2px -2px 20px #0b0a0a;
+} 
 
-.contact-name-small{
-    color: white;
-}
+/* texto del nombre */
+.contact-name{ color: white; }
+/* texto del alias */
+.contact-name-small{ color: white; }
 
+/* hacer el circulo del alias */
 .alias-circle{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     font-weight: bold;
-    font-size: 1rem;
-    background: linear-gradient(135deg, #13134d, #4b4d55);
+    font-size: 0.7rem;
+    background: linear-gradient(135deg, #4b4d55 ,#13134d );
     color: antiquewhite;
 }
 
+/* menu modal */
+/*---  boton de agregar contactos ---*/
+.btn-agregar-contacts{
+    background-color: rgba(255,255,255,0.1);
+    color: aliceblue;
+    border-radius: 10px;
+    border: none;
+    
+}
+.btn-agregar-contacts:hover{
+    border-radius: 7px;
+    background-color: rgba(255,255,255,0.2);
+    color: aliceblue;
+}
+
+/* el div que envuelve el formulario */
+.agree-contact{
+    background: linear-gradient(135deg,#010127d5  ,#011962d7 );
+    border-radius: 10px;
+}
+
+
+.formulario-modal label{
+    color: aliceblue;
+}
+/* menu modal fin*/
 
 
 /* fin sendMoney */

@@ -6,8 +6,6 @@
     
     <title>Enviar dinero a terceros</title>
 
-	
-
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -23,32 +21,36 @@
     </style>
     
 </head>
-<body class="d-flex justify-content-center align-items-center min-vh-100 w-100 py-3">
+<body class="d-flex justify-content-center align-items-center min-vh-100 w-100 py-1">
     
     <main>
 
         <div class="div-form  text-white p-1">
-            <!-- formulario principal -->
-            <form class="grupo-form text-white p-1 m-1">
-                <!-- buscador -->
-                <div class="form-group d-flex justify-content-between gap-2 mb-3 ">
-                    <input type="text" class="form-control" placeholder="Buscar contacto...">
-                    <button type="button" class="btn btn-principal">Buscar</button>
-                </div>
-                <!-- listado de contactos registrados -->
-                <div class="results-container   d-flex justify-content-center">
-                    <ul class="list-group px-2 py-1" id="contacts-list">
-                    
-                    </ul>
-                </div>
-            </form>
-            
-            <!-- botón que abre el modal -->
-            <button class="btn-agregar-contacts p-2 m-3" type="button" data-bs-toggle="modal" 
-            data-bs-target="#modalContacto">Agregar nuevo contacto</button>
             <div>
                 <a href="menu.html" class="btn btn-link text-dark text-decoration-none small text-center">&larr; Volver al menú</a>
             </div>
+                
+            <!-- formulario principal -->
+            <form class="grupo-form text-white p-1 m-1">
+                <!-- buscador -->
+                <div class="form-group d-flex flex-column justify-content-center gap-2 mb-3 ">
+                    <!-- botón que abre el modal -->
+                    <button class="btn-agregar-contacts py-3 mb-1 mx-2" type="button" data-bs-toggle="modal" 
+                    data-bs-target="#modalContacto">Agregar nuevo contacto</button>
+                    
+                    <input type="text" class=" buscar-contacto  mx-1 py-2 " placeholder="Buscar contacto...">
+                    <button type="button" class="btn btn-principal mx-2 py-2">Buscar</button>
+                    
+                </div>
+                            
+                <!-- listado de contactos registrados -->
+                <div class="results-container d-flex justify-content-center p-2">
+                    <ul class=" lista-contactos  p-3 overflow-auto" id="contacts-list">
+                    <!--  aqui van los contactos -->
+                    </ul>
+                </div>
+            </form>
+
         </div>
             
     </main>
@@ -57,28 +59,34 @@
         <!-- el modal -->
         <div class="modal fade " id="modalContacto">
             <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header grupo-form">
-                        <h5 class="modal-title  text-white">Nuevo Contacto</h5>
+                <div class="modal-content small mx-0 bg-transparent ">
+                    <div class="  p-3 mt-3 mx-1 mb-0 modal-header grupo-form">
+                        <h5 class="modal-title text-decoration-none text-center text-white">Agregar Contacto</h5>
                     </div>
-                    <div class="modal-body grupo-form">
+                    <div class="agree-contact modal-body grupo-form ">
                         <!-- contenido del formulario modal  -->
-                        <form action="#" class="form-group">
-                            <input type="text" class="form-control" placeholder="Escribe el nombre del contacto..." name="name" required>
+                        <form action="#" id="formulario-modal-agregar" class="formulario-modal form-group d-flex flex-column gap-2">
+                            <label for="name-contacto" class="form-label">Nombre:</label>
+                            <input id="name-contacto" type="text" class="form-control" placeholder="Escribe el nombre del contacto..." name="name" required>
+                            <label for="alias-contacto" class="form-label">Alias:</label>
+                            <input id="alias-contacto" type="text" class="form-control" placeholder="Escribe el nombre del contacto..." name="name" required>
+                            
+                            <label for="email-contacto" class="form-label">Email del Contacto:</label>
+                            <input id="email-contacto" type="email" class="form-control" placeholder="Escribe el email del contacto (opcional)..." name="email">
 							
-							<select name="tipoDeCuenta" id="tipoDeCuenta">
-								<option value="cuenta">Seleccione Tipo de Cuenta</option>
+							<select class="form-select" name="tipodecuenta" id="tipoDeCuenta" required>
+								<option value="">Tipo de Cuenta</option>
 								<option value="debito">Débito</option>
 								<option value="credito">Crédito</option>
 								<option value="prepago">Prepago</option>
 								<option value="masterCard">Master Card</option>
 							</select >
 
-                            <input type="number" class="form-control" placeholder="Escribe el numero de cuenta..." name="name" required>
+                            <label for="number-contacto" class="form-label">N° de Cuenta:</label>
+                            <input id="number-contacto" type="number" class="form-control" placeholder="Escribe el numero de cuenta..." name="name" required>
 
-                            <input type="text" class="form-control" placeholder="Escribe el email del contacto (opcional)..." name="email">
 
-                            <button type="submit" class="btn btn-principal  mt-2 w-10">Guardar</button>
+                            <button type="submit" id="guardar-contacto" class="btn btn-principal mt-2 w-10">Guardar</button>
                         </form>
                     </div>
                 </div>
