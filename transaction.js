@@ -1,76 +1,140 @@
-$(window).on('load', function() {
-    $("body").addClass("interfaz-lista");
+$(window).on("load", function () {
+  $("body").addClass("interfaz-lista");
 });
 
-$(document).ready(function(){
+$(document).ready(function () {
+  // -----------------------------------------------------------
+  // ESTADO: array en memoria que es la fuente de verdad
+  // -----------------------------------------------------------
+  const CONTACTOS = [];
 
-    // 1. Declaramos la base de datos al inicio para que esté accesible
-    const CONTACTOS = [];
+  // -----------------------------------------------------------
+  // VALIDACIÓN: detecta si el contacto ya existe por nombre, alias o número de cuenta
+  // -----------------------------------------------------------
+  function buscarDuplicado(nuevoContacto) {
+    for (let contacto of CONTACTOS) {
+      // estamos aignando y comparando si un alias/numerocuenta ya existe. o sea duplicado
+      const mismoAlias =
+        contacto.alias &&
+        nuevoContacto.alias &&
+        contacto.alias.toLowerCase() === nuevoContacto.alias.toLowerCase();
 
-    // 2. Creamos una función encargada exclusivamente de pintar la lista
-    function renderizarContactos() {
-        // Limpiar el contenedor usando su ID único para evitar duplicados
-        $("#contacts-list").empty();
+      const mismoNumero =
+        contacto.numerocuenta &&
+        nuevoContacto.numerocuenta &&
+        contacto.numerocuenta === nuevoContacto.numerocuenta;
 
-        // Iterar e inyectar usando $.each de jQuery
-        $.each(CONTACTOS, function(indice, contacto) {
-            
-            let itemHTML = `
-            <li class="li-contacto list-group-item p-0 m-0" data-id="${contacto.id}">
-                <button class="button-contact w-100 d-flex border-0 text-white py-3 px-3 mb-2">
-                    
-                    <div class="d-flex align-items-start gap-3">
-                        <div class="d-flex align-items-center justify-content-center fw-bold rounded-circle alias-circle">
-                            ${contacto.name ? contacto.name[0].toUpperCase() : (contacto.alias ? contacto.alias[0].toUpperCase() : "")}
-                        </div>
-                        <span class="contact-name fw-bold f-6 text-capitalize">${contacto.name}</span>
+      if (mismoAlias) return "alias"; // aqui retormamos si existe el alias duplicado.
+      if (mismoNumero) return "número de cuenta";
+    }
+    return null; // No hay duplicado
+  }
+
+  // -----------------------------------------------------------
+  // PERSISTENCIA: cargar y guardar en localStorage
+  // -----------------------------------------------------------
+
+  function cargarContactos() {
+    const guardados = localStorage.getItem("contactos");
+    if (guardados) {
+      const parseados = JSON.parse(guardados); // parse es para que sea un array de objetos
+      // Limpiamos y rellenamos el array en memoria
+      CONTACTOS.splice(0, CONTACTOS.length);
+      CONTACTOS.push(...parseados);
+    }
+  }
+
+  function guardarContactos() {
+    localStorage.setItem("contactos", JSON.stringify(CONTACTOS));
+  }
+
+  // -----------------------------------------------------------
+  // RENDER: solo lee CONTACTOS y pinta el DOM
+  // -----------------------------------------------------------
+
+  function renderizarContactos() {
+    $("#lista-contactos").empty();
+
+    if (CONTACTOS.length === 0) {
+      $("#lista-contactos").append(`
+                <li class="item-contacto list-group-item p-0 m-0">
+                    <div class="d-flex align-items-center justify-content-center w-100 h-100">
+                        <span class="text-white opacity-30">No hay contactos registrados.</span>
                     </div>
-
-                    <div class="text-end d-flex align-items-end">
-                        <small class="contact-name-small opacity-50">${contacto.alias} | Cuenta: ${contacto.tipocuenta}</small>
-                    </div>
-                    
-                </button>
-            </li>
-            `;
-            
-            $("#contacts-list").append(itemHTML);
-        });
+                </li>
+            `);
+      return; // No hay nada más que hacer
     }
 
-    // Ejecutamos la función una vez al cargar la página (por si ya hay datos iniciales)
-    renderizarContactos();
-
-
-    // 3. Lógica para capturar y guardar contactos
-    // CAMBIO CLAVE: Escuchamos el 'submit' del FORMULARIO, no el click del botón de #guardar-contacto
-    $(`#formulario-modal-agregar`).on("submit", function(e){
-        // El navegador ya validó los 'required' antes de llegar a esta línea
-        e.preventDefault(); // Ahora sí detenemos la recarga de página de forma segura
-
-        const id = CONTACTOS.length + 1;
-        const name = $(`#name-contacto`).val();
-        const email = $(`#email-contacto`).val();
-        const alias = $(`#alias-contacto`).val();
-        const tipodecuenta = $(`#tipoDeCuenta`).val();
-        
-        CONTACTOS.push({
-            id: id,
-            name: name,
-            email: email,
-            alias: alias,
-            tipocuenta: tipodecuenta
-        });
-
-        // Limpiar los inputs
-        $(`#name-contacto`).val("");
-        $(`#email-contacto`).val("");
-        $(`#alias-contacto`).val("");
-        $(`#tipoDeCuenta`).val("");
-        $(`#number-contacto`).val("");
-
-        // ¡Crucial! Volvemos a llamar a la función para actualizar la pantalla
-        renderizarContactos();
+    // Ordenamos por nombre o alias antes de pintar
+    CONTACTOS.sort((a, b) => {
+      const nameA = (a.name || a.alias).toLowerCase();
+      const nameB = (b.name || b.alias).toLowerCase();
+      return nameA.localeCompare(nameB);
     });
 
+    $.each(CONTACTOS, function (indice, contacto) {
+      const inicial = contacto.name
+        ? contacto.name[0].toUpperCase()
+        : contacto.alias[0].toUpperCase();
+
+      const itemHTML = `
+            <li class="item-contacto list-group-item p-0 m-0" data-id="${contacto.id}">
+                <button class="tarjeta-contacto w-100 d-flex border-0 text-white py-3 px-3 mb-2">
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="d-flex align-items-center justify-content-center fw-bold rounded-circle avatar-inicial-contacto">
+                            ${inicial}
+                        </div>
+                        <span class="nombre-contacto fw-bold f-6 text-capitalize">${contacto.name}</span>
+                    </div>
+                    <div class="text-end d-flex align-items-end">
+                        <small class="info-alias-cuenta opacity-50">${contacto.alias} | Cuenta: ${contacto.tipocuenta}</small>
+                    </div>
+                </button>
+            </li>`;
+
+      $("#lista-contactos").append(itemHTML);
+    });
+  }
+
+  // -----------------------------------------------------------
+  // INICIO: cargar datos y pintar
+  // -----------------------------------------------------------
+  cargarContactos();
+  renderizarContactos();
+
+  // -----------------------------------------------------------
+  // EVENTO: agregar nuevo contacto
+  // -----------------------------------------------------------
+  $("#formulario-agregar-contacto").on("submit", function (e) {
+    e.preventDefault();
+
+    const nuevoContacto = {
+      id: Date.now(),
+      name: $("#input-nombre-contacto").val().trim(),
+      email: $("#input-email-contacto").val().trim(),
+      alias: $("#input-alias-contacto").val().trim(),
+      tipocuenta: $("#select-tipo-cuenta").val(),
+      numerocuenta: $("#input-numero-cuenta").val().trim(), // ← antes se limpiaba pero nunca se guardaba
+    };
+
+    // Revisamos si algún campo ya existe antes de agregar
+    const campoDuplicado = buscarDuplicado(nuevoContacto);
+
+    if (campoDuplicado) {
+      // Mostramos feedback y salimos sin agregar ni limpiar el form
+      $("#mensaje-duplicado")
+        .text(`Ya existe un contacto con ese ${campoDuplicado}.`)
+        .removeClass("d-none");
+      return;
+    }
+
+    // Si no hay duplicado, limpiamos el mensaje, guardamos y renderizamos
+    $("#mensaje-duplicado").addClass("d-none");
+
+    CONTACTOS.push(nuevoContacto);
+    guardarContactos();
+    renderizarContactos();
+    this.reset();
+  });
 });

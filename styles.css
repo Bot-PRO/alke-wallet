@@ -1,12 +1,11 @@
 /* Global */
-body{
-    /* Transiciones */
-    opacity: 0;
-    transition: opacity 0.25s ease-in;
+body {
+  /* Transiciones */
+  opacity: 0;
+  transition: opacity 0.25s ease-in;
 }
 
 /* Nueva clase debajo del body para activar la animacion  */
 body.interfaz-lista {
-    opacity: 1;
+  opacity: 1;
 }
-

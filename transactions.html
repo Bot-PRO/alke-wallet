@@ -1,59 +1,61 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Movimientos</title>
 
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Estilos globales y de transacciones -->
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="transaction.css" />
 
-        <!-- CSS -->
-    <link rel="stylesheet" href="styles.css">    
-    <link rel="stylesheet" href="transaction.css">    
-
+    <!-- Fondo degradado oscuro para toda la página -->
     <style>
-        html, body { 
-            background: linear-gradient(135deg, #020617 0%, #0f172a 100%) !important; 
-            min-height: 100vh;
-        }
+      html,
+      body {
+        background: linear-gradient(
+          135deg,
+          #020617 0%,
+          #0f172a 100%
+        ) !important;
+        min-height: 100vh;
+      }
     </style>
-
-</head>
-<body>
-    
+  </head>
+  <body>
     <main>
-
-        <!-- Fila de Bootstrap para dividir en dos columnas -->
-        <div class="row g-2 mt-2" >
-        
-            <!-- Bloque de Ingresos -->
-            <div class="col-6">
-                <div class="p-2 border rounded bg-light text-center">
-                <span class="small text-muted d-block">Ingresos</span>
-                <!-- 'data' guarda el valor real en el atributo value -->
-                <data value="25000" class="text-success fw-bold">+$25.000</data>
-                </div>
-            </div>
-
-            <!-- Bloque de Egresos -->
-            <div class="col-6">
-                <div class="p-2 border rounded bg-light text-center">
-                <span class="small text-muted d-block">Egresos</span>
-                <data value="9500" class="text-danger fw-bold">-$9.500</data>
-                </div>
-            </div>
+      <!-- Fila de resumen financiero: ingresos y egresos del período -->
+      <div class="row g-2 mt-2">
+        <!-- Bloque de ingresos totales -->
+        <div class="col-6">
+          <div class="p-2 border rounded bg-light text-center">
+            <span class="small text-muted d-block">Ingresos</span>
+            <!-- data[value] almacena el valor numérico real para procesamiento con JS -->
+            <data value="25000" class="text-success fw-bold">+$25.000</data>
+          </div>
         </div>
 
-        
+        <!-- Bloque de egresos totales -->
+        <div class="col-6">
+          <div class="p-2 border rounded bg-light text-center">
+            <span class="small text-muted d-block">Egresos</span>
+            <data value="9500" class="text-danger fw-bold">-$9.500</data>
+          </div>
+        </div>
+      </div>
     </main>
-    <!-- Jquery -->
+
+    <!-- jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
+    <!-- Bootstrap JS (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- script -->
+    <!-- Lógica de contactos y transacciones -->
     <script src="transaction.js"></script>
-</body>
+  </body>
 </html>

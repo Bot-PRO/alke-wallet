@@ -1,136 +1,138 @@
-/* sendMoney */
-/*---  boton de buscar contactos  y guardar  contactos ---*/
-.btn-principal{
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    color: aliceblue;
-}
-.btn-principal:hover{
-    border-radius: 8px;
-    background-color: rgba(255,255,255,0.2);
-    color: aliceblue;
-    box-shadow: 1px 1px 5px rgba(247, 244, 244, 0.27);
-}
+/* ===== ESTILOS COMPARTIDOS: sendmoney.html y transactions.html ===== */
 
-.buscar-contacto{
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 10px;
-    
+/* --- Botón de acción principal del formulario (buscar y guardar contactos) --- */
+.btn-accion-formulario {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  color: aliceblue;
 }
-.buscar-contacto:hover{
-    border-radius: 8px;
-    background-color: rgba(255,255,255,0.3);
-    
-    
+.btn-accion-formulario:hover {
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: aliceblue;
+  box-shadow: 1px 1px 5px rgba(247, 244, 244, 0.27);
 }
 
-
-.div-form{
-    width: 100%;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 1px 1px 20px rgb(249, 247, 247);
+/* Campo de texto para buscar contactos por nombre o alias */
+.input-busqueda-contacto {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
 }
-.list-group-select:hover{
-    background-color: burlywood;
-}
-
-/* el cuerpo del formulario  */
-.grupo-form{
-    background:  transparent;
-    max-width: 500px;
+.input-busqueda-contacto:hover {
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-
-
-.li-contacto{
-    min-width: 300px;
-
+/* Tarjeta contenedora del formulario principal de envío de dinero */
+.tarjeta-formulario-envio {
+  width: 100%;
+  max-width: 500px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 20px rgb(249, 247, 247);
 }
 
-/*  el listado de contactos */
-.lista-contactos{
-    max-height: 197px;
-    min-height: 190px;
-    overflow-y: auto;
-    scrollbar-width: none;
-    border-radius: 10px;
-
-    
-}
-/* ocultar la barra-scroll */
-#contacts-list::-webkit-scrollbar{
-    display: none;
-}
-.results-container{
-    border-radius: 10px;
-    width: 100%;
+/* Ítem de lista con efecto hover — para listas de opciones seleccionables */
+.item-lista-seleccionable:hover {
+  background-color: burlywood;
 }
 
-
-/* el boton que es el usuario agregado */
-
-.button-contact{
-    background: linear-gradient(135deg, #0b0f19 30%, #1e1b4b 100%);
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    /* Sombra exterior que los despega del fondo */
-    box-shadow: 8px 8px 16px  #0b0f19, 
-        -8px -8px 16px #1e1b4b;
+/* Cuerpo base compartido del formulario: fondo transparente y ancho máximo */
+.cuerpo-formulario {
+  background: transparent;
+  max-width: 500px;
 }
 
-/* cuando el mouse pasa por encima */
-.button-contact:hover{
-    background: linear-gradient(300deg, #0f0d27 30% ,#060606 100%);
-    border-radius: 8px;
-    transform: translateY(-5px);
-    box-shadow: 12px 12px 20px #011b48, 
-        -2px -2px 20px #0b0a0a;
-} 
-
-/* texto del nombre */
-.contact-name{ color: white; }
-/* texto del alias */
-.contact-name-small{ color: white; }
-
-/* hacer el circulo del alias */
-.alias-circle{
-    width: 30px;
-    height: 30px;
-    font-weight: bold;
-    font-size: 0.7rem;
-    background: linear-gradient(135deg, #4b4d55 ,#13134d );
-    color: antiquewhite;
+/* Ítem individual de contacto dentro de la lista */
+.item-contacto {
+  min-width: 300px;
 }
 
-/* menu modal */
-/*---  boton de agregar contactos ---*/
-.btn-agregar-contacts{
-    background-color: rgba(255,255,255,0.1);
-    color: aliceblue;
-    border-radius: 10px;
-    border: none;
-    
-}
-.btn-agregar-contacts:hover{
-    border-radius: 7px;
-    background-color: rgba(255,255,255,0.2);
-    color: aliceblue;
+/* Lista de contactos con altura fija y scroll vertical — scrollbar oculta visualmente */
+.lista-contactos-scroll {
+  max-height: 197px;
+  min-height: 190px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  border-radius: 10px;
 }
 
-/* el div que envuelve el formulario */
-.agree-contact{
-    background: linear-gradient(135deg,#010127d5  ,#011962d7 );
-    border-radius: 10px;
+/* Oculta la barra de scroll en navegadores WebKit (Chrome, Safari, Edge) */
+#lista-contactos::-webkit-scrollbar {
+  display: none;
 }
 
-
-.formulario-modal label{
-    color: aliceblue;
+/* Div que envuelve la lista de contactos registrados */
+.contenedor-lista-contactos {
+  border-radius: 10px;
+  width: 100%;
 }
-/* menu modal fin*/
 
+/* Tarjeta-botón de cada contacto guardado — efecto visual de profundidad (neumórfico) */
+.tarjeta-contacto {
+  background: linear-gradient(135deg, #0b0f19 30%, #1e1b4b 100%);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow:
+    8px 8px 16px #0b0f19,
+    -8px -8px 16px #1e1b4b;
+}
 
-/* fin sendMoney */
+/* Estado hover de la tarjeta: sube levemente y profundiza la sombra */
+.tarjeta-contacto:hover {
+  background: linear-gradient(300deg, #0f0d27 30%, #060606 100%);
+  border-radius: 8px;
+  transform: translateY(-5px);
+  box-shadow:
+    12px 12px 20px #011b48,
+    -2px -2px 20px #0b0a0a;
+}
+
+/* Nombre principal del contacto */
+.nombre-contacto {
+  color: white;
+}
+
+/* Información secundaria del contacto: alias y tipo de cuenta */
+.info-alias-cuenta {
+  color: white;
+}
+
+/* Avatar circular que muestra la inicial del nombre del contacto */
+.avatar-inicial-contacto {
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  font-size: 0.7rem;
+  background: linear-gradient(135deg, #4b4d55, #13134d);
+  color: antiquewhite;
+}
+
+/* ===== MODAL: AGREGAR CONTACTO ===== */
+
+/* Botón que abre el modal para registrar un nuevo contacto */
+.btn-abrir-modal-contacto {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: aliceblue;
+  border-radius: 10px;
+  border: none;
+}
+.btn-abrir-modal-contacto:hover {
+  border-radius: 7px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: aliceblue;
+}
+
+/* Contenedor del formulario del modal — fondo con degradado azul oscuro translúcido */
+.cuerpo-modal-contacto {
+  background: linear-gradient(135deg, #010127d5, #011962d7);
+  border-radius: 10px;
+}
+
+/* Etiquetas de los campos dentro del formulario del modal */
+.formulario-agregar-contacto label {
+  color: aliceblue;
+}
+
+/* ===== FIN ESTILOS ===== */
