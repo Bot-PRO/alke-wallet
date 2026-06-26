@@ -10,6 +10,8 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- error de favicon -->
+    <link rel="icon" href="data:," />
 
     <!-- Estilos globales y de transacciones -->
     <link rel="stylesheet" href="styles.css" />
@@ -62,6 +64,9 @@
             <!-- Campo de búsqueda para filtrar contactos por nombre o alias -->
             <input
               type="text"
+              id="buscador"
+              name="buscador"
+              autocomplete="off"
               class="input-busqueda-contacto mx-1 py-2"
               placeholder="Buscar contacto..."
             />
@@ -114,6 +119,7 @@
                 class="form-control"
                 placeholder="Escribe el nombre del contacto..."
                 name="name"
+                ...autocomplete="name"
                 required
               />
 
@@ -126,6 +132,7 @@
                 class="form-control"
                 placeholder="Escribe el alias del contacto..."
                 name="alias"
+                ...autocomplete="off"
                 required
               />
 
@@ -138,13 +145,16 @@
                 class="form-control"
                 placeholder="Escribe el email del contacto (opcional)..."
                 name="email"
+                ...autocomplete="email"
+                name="email"
               />
 
               <!-- Selector de tipo de cuenta bancaria -->
               <select
+                id="select-tipo-cuenta"
                 class="form-select"
                 name="tipodecuenta"
-                id="select-tipo-cuenta"
+                ...autocomplete="off"
                 required
               >
                 <option value="">Tipo de Cuenta</option>
@@ -163,6 +173,7 @@
                 class="form-control"
                 placeholder="Escribe el número de cuenta..."
                 name="numerocuenta"
+                ...autocomplete="off"
                 required
               />
 

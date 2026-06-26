@@ -137,4 +137,43 @@ $(document).ready(function () {
     renderizarContactos();
     this.reset();
   });
+
+  // -----------------------------------------------------------
+  // EVENTO: buscar contacto existente -buscador inteligente
+  // -----------------------------------------------------------
+  $(".input-busqueda-contacto").on("keyup", function () {
+    /* Capturamos y Convertimos el texto de busqueda a minúsculas */
+    const textoBusqueda = this.value.toLowerCase();
+    /* Capturamos los contactos guardados */
+    const guardados = localStorage.getItem("contactos");
+    /* Convertimos los contactos a un array */
+    const contactos = JSON.parse(guardados);
+
+    /* Recorremos los contactos y mostramos o ocultamos según el texto de busqueda */
+    contactos.forEach((contacto) => {
+      const nombre = contacto.name.toLowerCase();
+      /* Comparamos el nombre del contacto con el texto de busqueda */
+      if (nombre.includes(textoBusqueda)) {
+        /* usamos show para mostrar el contacto */
+        $(`.item-contacto[data-id="${contacto.id}"]`).show();
+      } else {
+        /* usamos hide para ocultar el contacto  */
+        $(`.item-contacto[data-id="${contacto.id}"]`).hide();
+      }
+    });
+  });
+
+  // -----------------------------------------------------------
+  // Eliminar lo del localStorage
+  // -----------------------------------------------------------
+
+  function eliminarCttGuardados() {
+    localStorage.removeItem("contactos");
+    location.reload();
+  }
+
+  /* function eliminarsaldo() {
+  localStorage.removeItem("contactos");
+  location.reload();
+} */
 });
