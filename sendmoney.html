@@ -1,58 +1,250 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Enviar dinero a terceros</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-</head>
-<body>
-    
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- error de favicon -->
+    <link rel="icon" href="data:," />
+
+    <!-- Estilos globales y de transacciones -->
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/transaction.css" />
+
+    <!-- Fondo degradado oscuro para toda la página -->
+    <style>
+      html,
+      body {
+        background: linear-gradient(
+          135deg,
+          #020617 0%,
+          #0f172a 100%
+        ) !important;
+        min-height: 100vh;
+      }
+    </style>
+  </head>
+  <body
+    class="d-flex justify-content-center align-items-center min-vh-100 w-100 py-1"
+  >
     <main>
-
-        <div class="">
-            <!-- formulario principal -->
-            <form>
-                <div class="form-group d-flex gap-2">
-                    <input type="text" class="form-control" placeholder="Buscar contacto...">
-                    <button type="button" class="btn btn-primary">Buscar</button>
-                </div>
-
-                <div class="card card-body">
-
-                    
-
-                </div>
-            </form>
-            
-            <!-- botón que abre el modal -->
-            <button type="button" data-bs-toggle="modal" 
-            data-bs-target="#modalContacto">Agregar nuevo contacto</button>
+      <!-- Tarjeta principal que contiene el formulario de envío de dinero -->
+      <div class="tarjeta-formulario-envio text-white p-1">
+        <!-- Enlace de navegación para volver al menú principal -->
+        <div>
+          <a
+            href="menu.html"
+            class="btn btn-link text-dark text-decoration-none small text-center"
+            >&larr; Volver al menú</a
+          >
         </div>
-            
+
+        <!-- Formulario principal: buscar y seleccionar contacto destinatario -->
+        <form class="cuerpo-formulario text-white p-1 m-1">
+          <!-- Sección de acciones: agregar contacto nuevo y buscar contacto existente -->
+          <div
+            class="form-group d-flex flex-column justify-content-center gap-2 mb-3"
+          >
+            <!-- Botón que abre el modal para agregar un nuevo contacto -->
+            <button
+              class="btn-abrir-modal-contacto py-3 mb-1 mx-2"
+              type="button"
+              data-bs-toggle="modal"
+              data-bs-target="#modal-agregar-contacto"
+            >
+              Agregar nuevo contacto
+            </button>
+
+            <!-- Campo de búsqueda para filtrar contactos por nombre o alias -->
+            <input
+              type="text"
+              id="buscador"
+              name="buscador"
+              autocomplete="off"
+              class="input-busqueda-contacto mx-1 py-2"
+              placeholder="Buscar contacto..."
+            />
+
+            <!-- Botón que dispara la búsqueda de contactos -->
+            <button type="button" class="btn btn-accion-formulario mx-2 py-2">
+              Buscar
+            </button>
+          </div>
+
+          <!-- Listado de contactos registrados, renderizado dinámicamente por transaction.js -->
+          <div
+            class="contenedor-lista-contactos d-flex justify-content-center p-2"
+          >
+            <ul
+              class="lista-contactos-scroll p-3 overflow-auto"
+              id="lista-contactos"
+            >
+              <!-- Las tarjetas de contacto se insertan aquí mediante JavaScript -->
+            </ul>
+          </div>
+        </form>
+      </div>
     </main>
 
-        <!-- formulario modal -->
-        <!-- el modal -->
-        <div class="modal fade" id="modalContacto">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Nuevo Contacto</h5>
-                    </div>
-                    <div class="modal-body">
-                        <!-- contenido del formulario modal  -->
-                    </div>
-                </div>
-            </div>
-        </div>
+    <!-- ===== MODAL: AGREGAR NUEVO CONTACTO ===== -->
+    <div class="modal fade" id="modal-agregar-contacto">
+      <div class="modal-dialog">
+        <div class="modal-content small mx-0 bg-transparent">
+          <!-- Encabezado del modal -->
+          <div class="p-3 mt-3 mx-1 mb-0 modal-header cuerpo-formulario">
+            <h5 class="modal-title text-decoration-none text-center text-white">
+              Agregar Contacto
+            </h5>
+          </div>
 
-        
-    <!-- script -->
+          <!-- Cuerpo del modal con el formulario de registro de contacto -->
+          <div class="cuerpo-modal-contacto modal-body cuerpo-formulario">
+            <form
+              action="#"
+              id="formulario-agregar-contacto"
+              class="formulario-agregar-contacto form-group d-flex flex-column gap-2"
+            >
+              <label for="input-nombre-contacto" class="form-label"
+                >Nombre:</label
+              >
+              <input
+                id="input-nombre-contacto"
+                type="text"
+                class="form-control"
+                placeholder="Escribe el nombre del contacto..."
+                name="name"
+                ...autocomplete="name"
+                required
+              />
+
+              <label for="input-alias-contacto" class="form-label"
+                >Alias:</label
+              >
+              <input
+                id="input-alias-contacto"
+                type="text"
+                class="form-control"
+                placeholder="Escribe el alias del contacto..."
+                name="alias"
+                ...autocomplete="off"
+                required
+              />
+
+              <label for="input-email-contacto" class="form-label"
+                >Email del Contacto:</label
+              >
+              <input
+                id="input-email-contacto"
+                type="email"
+                class="form-control"
+                placeholder="Escribe el email del contacto (opcional)..."
+                name="email"
+                ...autocomplete="email"
+                name="email"
+              />
+
+              <!-- Selector de tipo de cuenta bancaria -->
+              <select
+                id="select-tipo-cuenta"
+                class="form-select"
+                name="tipodecuenta"
+                ...autocomplete="off"
+                required
+              >
+                <option value="">Tipo de Cuenta</option>
+                <option value="debito">Débito</option>
+                <option value="credito">Crédito</option>
+                <option value="prepago">Prepago</option>
+                <option value="masterCard">Master Card</option>
+              </select>
+
+              <label for="input-numero-cuenta" class="form-label"
+                >N° de Cuenta:</label
+              >
+              <input
+                id="input-numero-cuenta"
+                type="number"
+                class="form-control"
+                placeholder="Escribe el número de cuenta..."
+                name="numerocuenta"
+                ...autocomplete="off"
+                required
+              />
+
+              <!-- Mensaje de duplicado: oculto por defecto, visible solo cuando hay error -->
+              <p id="mensaje-duplicado" class="text-danger small d-none"></p>
+
+              <!-- Botón de envío del formulario modal -->
+              <button
+                type="submit"
+                id="btn-guardar-contacto"
+                class="btn btn-accion-formulario mt-2 w-10"
+              >
+                Guardar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-transferencia" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">
+              Transferir a <span id="modal-nombre-contacto"></span>
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <p>Cuenta: <span id="modal-cuenta-contacto"></span></p>
+            <p>Saldo disponible: <span id="modal-saldo-disponible"></span></p>
+            <input
+              type="number"
+              id="input-monto-transferencia"
+              class="form-control"
+              placeholder="Ingresa el monto"
+            />
+          </div>
+
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="btn-confirmar-transferencia"
+            >
+              Transferir
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- ===== FIN MODAL ===== -->
+
+    <!-- jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <!-- Bootstrap JS (incluye Popper para modales) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+    <!-- Lógica de contactos y transacciones -->
+    <script type="module" src="js/transaction.js"></script>
+  </body>
 </html>
