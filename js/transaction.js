@@ -313,7 +313,7 @@ $(document).ready(function () {
 
       localStorage.setItem("saldo", saldoActual);
       $("#saldoDisponible").text(formateador.format(saldoActual));
-      crearTransaccion("transferencia", monto, contactoSeleccionado);
+      crearTransaccion("Transferencia", monto, contactoSeleccionado);
 
       $("#input-monto-transferencia").val("");
       modalTransferencia.hide();
