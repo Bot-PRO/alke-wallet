@@ -136,3 +136,54 @@
 }
 
 /* ===== FIN ESTILOS ===== */
+
+/* --- sendmoney modal transferencia --- */
+
+.cuerpo-de-movimiento {
+  background: linear-gradient(200deg, #050510d5, #060a14d7);
+  border-radius: 10px;
+}
+
+.cabecera-de-tarjeta {
+  background: linear-gradient(200deg, #050510d5, #060a14d7);
+}
+
+.cuerpo-lista {
+  background: linear-gradient(200deg, #050510d5, #060a14d7);
+}
+
+.cuerpo-de-lista {
+  background: linear-gradient(200deg, #050510d5, #060a14d7);
+}
+
+.transferencia-lista {
+  background: linear-gradient(100deg, #050510d5, #060a14d7);
+  border-radius: 2.5rem;
+  padding: 3%;
+}
+
+.color-texto-deposito {
+  color: #12f307d5;
+}
+
+.color-texto-retiro {
+  color: #fd0707d5;
+}
+
+.color-texto-transferencia {
+  color: #eaff02d5;
+}
+
+.color-fondo-deposito {
+  background: linear-gradient(90deg, #044001d5, #050510d5);
+}
+
+.color-fondo-retiro {
+  background: linear-gradient(90deg, #460101d5, #050510d5);
+}
+
+.color-fondo-transferencia {
+  background: linear-gradient(90deg, #535a03d5, #050510d5);
+}
+
+/* --- sendmoney modal transferencia fin --- */

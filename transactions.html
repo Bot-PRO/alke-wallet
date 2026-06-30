@@ -10,10 +10,12 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- error de favicon -->
+    <link rel="icon" href="data:," />
 
     <!-- Estilos globales y de transacciones -->
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="transaction.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/transaction.css" />
 
     <!-- Fondo degradado oscuro para toda la página -->
     <style>
@@ -33,13 +35,24 @@
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-md-8">
-            <div class="card">
-              <div class="card-header">
-                <h2>Movimientos</h2>
+            <div
+              class="cuerpo-de-movimiento mt-5 card d-flex justify-content-center"
+            >
+              <div>
+                <a
+                  href="menu.html"
+                  class="btn btn-link text-dark text-decoration-none small text-white text-center"
+                  >&larr; Volver al menú
+                </a>
               </div>
-              <div class="card-body">
-                <ul class="list-group" id="transaction-list">
-                  a
+              <div
+                class="cabecera-de-tarjeta card-header d-flex align-items-center justify-content-center"
+              >
+                <h2 class="text-center text-white">Movimientos</h2>
+              </div>
+              <div class="cuerpo-lista card-body">
+                <ul class="list-group cuerpo-de-lista" id="transaction-list">
+                  <!-- Las transacciones se insertan aqui mediante JavaScript -->
                 </ul>
               </div>
             </div>
@@ -53,6 +66,6 @@
     <!-- jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <!-- Lógica de contactos y transacciones -->
-    <script src="transaction.js"></script>
+    <script type="module" src="js/transaction.js"></script>
   </body>
 </html>

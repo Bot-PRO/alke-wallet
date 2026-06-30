@@ -1,8 +1,33 @@
+// -----------------------------------------------------------
+// Historial de transacciones
+// -----------------------------------------------------------
+const historialGuardado = localStorage.getItem("historial");
+const Historial = historialGuardado ? JSON.parse(historialGuardado) : [];
+
+export function crearTransaccion(tipo, monto, contacto = null) {
+  // 1. Creamos la transaccion
+  const transaccion = {
+    id: Date.now(),
+    tipo: tipo,
+    monto: monto,
+    fecha: new Date().toLocaleString("es-CL", { hour12: false }),
+    contacto: contacto,
+  };
+
+  // 2. Guardar la transaccion
+  Historial.push(transaccion);
+  //console.log(Historial);
+  // 3. Guardar el localStorage
+  localStorage.setItem("historial", JSON.stringify(Historial));
+  return transaccion;
+}
+
 $(window).on("load", function () {
   $("body").addClass("interfaz-lista");
 });
 
 $(document).ready(function () {
+  let formateador = new Intl.NumberFormat("es-CL");
   // -----------------------------------------------------------
   // ESTADO: array en memoria que es la fuente de verdad
   // -----------------------------------------------------------
@@ -39,7 +64,7 @@ $(document).ready(function () {
     if (guardados) {
       const parseados = JSON.parse(guardados); // parse es para que sea un array de objetos
       // Limpiamos y rellenamos el array en memoria
-      CONTACTOS.splice(0, CONTACTOS.length);
+      CONTACTOS.splice(0, CONTACTOS.length); // splice lo limpia y lo rellena de nuevo.
       CONTACTOS.push(...parseados);
     }
   }
@@ -80,7 +105,7 @@ $(document).ready(function () {
 
       const itemHTML = `
             <li class="item-contacto list-group-item p-0 m-0" data-id="${contacto.id}">
-                <button class="tarjeta-contacto w-100 d-flex border-0 text-white py-3 px-3 mb-2">
+                <button type="button" class="tarjeta-contacto w-100 d-flex border-0 text-white py-3 px-3 mb-2">
                     <div class="d-flex align-items-start gap-3">
                         <div class="d-flex align-items-center justify-content-center fw-bold rounded-circle avatar-inicial-contacto">
                             ${inicial}
@@ -139,7 +164,7 @@ $(document).ready(function () {
   });
 
   // -----------------------------------------------------------
-  // EVENTO: buscar contacto existente -buscador inteligente
+  // EVENTO: buscar contacto existente - buscador inteligente
   // -----------------------------------------------------------
   $(".input-busqueda-contacto").on("keyup", function () {
     /* Capturamos y Convertimos el texto de busqueda a minúsculas */
@@ -155,10 +180,10 @@ $(document).ready(function () {
       /* Comparamos el nombre del contacto con el texto de busqueda */
       if (nombre.includes(textoBusqueda)) {
         /* usamos show para mostrar el contacto */
-        $(`.item-contacto[data-id="${contacto.id}"]`).show();
+        $(`.item-contacto[data-id="${contacto.id}"]`).show("slow");
       } else {
         /* usamos hide para ocultar el contacto  */
-        $(`.item-contacto[data-id="${contacto.id}"]`).hide();
+        $(`.item-contacto[data-id="${contacto.id}"]`).hide("slow");
       }
     });
   });
@@ -172,8 +197,126 @@ $(document).ready(function () {
     location.reload();
   }
 
-  /* function eliminarsaldo() {
-  localStorage.removeItem("contactos");
-  location.reload();
-} */
+  function eliminarsaldo() {
+    localStorage.removeItem("saldo");
+    location.reload();
+  }
+
+  function eliminarhistorial() {
+    localStorage.removeItem("historial");
+    location.reload();
+  }
+
+  // -----------------------------------------------------------
+  // Historial
+  // -----------------------------------------------------------
+  // Antes del forEach, defines los colores
+  function colorPorTipo(tipo) {
+    if (tipo === "Deposito") return "fw-bold color-texto-deposito "; // verde
+    if (tipo === "Retiro") return "fw-bold color-texto-retiro "; // rojo
+    return "fw-bold color-texto-transferencia "; // amarillo para envíos
+  }
+  function fondoPorTipo(tipo) {
+    if (tipo === "Deposito") return " rounded-pill color-fondo-deposito"; // verde
+    if (tipo === "Retiro") return "rounded-pill color-fondo-retiro"; // rojo
+    return "rounded-pill color-fondo-transferencia"; // amarillo para envíos
+  }
+
+  // Solo corre si estamos en transactions.html
+  if ($("#transaction-list").length) {
+    const guardadoHistorial = localStorage.getItem("historial");
+    const historial = guardadoHistorial ? JSON.parse(guardadoHistorial) : [];
+    //console.log(historial);
+
+    const historialOrdenado = [...historial].sort(function (a, b) {
+      return b.id - a.id;
+    });
+
+    if (historialOrdenado.length === 0) {
+      $("#transaction-list").append(`
+        <li class="list-group-item text-center opacity-50">
+          No hay transacciones registradas.
+        </li>
+      `);
+    } else {
+      historialOrdenado.forEach(function (transaccion) {
+        const tipocolor = colorPorTipo(transaccion.tipo);
+        const fondocolor = fondoPorTipo(transaccion.tipo);
+        $("#transaction-list").append(`
+          <li class="transferencia-lista  mb-2 d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-column w-100">
+              
+              <div class="d-flex align-items-center w-50">
+                <strong class="text-white p-2 ${fondocolor}">${transaccion.tipo}</strong>
+              </div>
+              
+              <div class="d-flex align-items-center justify-content-between my-1">
+                <strong class="text-white p-2 ${transaccion.contacto ? fondocolor : ``} ">${transaccion.contacto ? ` Para: ${transaccion.contacto.name[0].toUpperCase() + transaccion.contacto.name.slice(1)}` : ""}</strong>
+                <span class="${tipocolor} fw-bold fs-5">
+                ${transaccion.contacto || transaccion.tipo === "Retiro" ? "-" : ""}$${formateador.format(transaccion.monto)}
+                </span>
+              </div>
+
+              <div class="d-flex align-items-center w-50 ">
+                <small class="d-block text-white  ${fondocolor}">${transaccion.fecha}</small>
+              </div>
+            </div>
+          </li>
+        `);
+      });
+    }
+  }
+
+  // -----------------------------------------------------------
+  // EVENTO: transferir dinero y actualizar saldo de menu
+  // -----------------------------------------------------------
+  if ($("#modal-transferencia").length) {
+    let contactoSeleccionado = null;
+    const modalTransferencia = new bootstrap.Modal( // una vez aquí
+      document.getElementById("modal-transferencia"),
+    );
+
+    $("#lista-contactos").on("click", ".tarjeta-contacto", function () {
+      const id = $(this).closest("li").data("id");
+      contactoSeleccionado = CONTACTOS.find((c) => c.id == id);
+      //console.log(contactoSeleccionado);
+      $("#modal-nombre-contacto").text(
+        contactoSeleccionado.name[0].toUpperCase() +
+          contactoSeleccionado.name.slice(1),
+      );
+      $("#modal-cuenta-contacto").text(contactoSeleccionado.tipocuenta);
+
+      let saldo = Number(localStorage.getItem("saldo"));
+      $("#modal-saldo-disponible").text(saldo);
+
+      modalTransferencia.show(); // siempre la misma instancia
+    });
+
+    $("#btn-confirmar-transferencia").on("click", function () {
+      // saldo actual
+      let saldo = Number(localStorage.getItem("saldo"));
+      // monto ingresado
+      let montoInput = $("#input-monto-transferencia").val().trim(); // captura el input
+      // monto a transferir parseado
+      let monto = parseInt(montoInput, 10);
+
+      // validaciones...
+      if (isNaN(monto) || monto <= 0) {
+        alert("Por favor, ingresa un monto valido y mayor a 0.");
+        return;
+      } else if (monto > saldo) {
+        alert("No tienes suficiente saldo para realizar esta transferencia");
+        return;
+      }
+      // actualizar el saldo
+      let saldoActual = saldo - monto;
+
+      localStorage.setItem("saldo", saldoActual);
+      $("#saldoDisponible").text(formateador.format(saldoActual));
+      crearTransaccion("transferencia", monto, contactoSeleccionado);
+
+      $("#monto").val("");
+      modalTransferencia.hide();
+    });
+  }
 });
