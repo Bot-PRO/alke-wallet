@@ -1,6 +1,6 @@
-// -----------------------------------------------------------
-// Historial de transacciones
-// -----------------------------------------------------------
+// -----
+// 1. Historial de transacciones
+// -----
 const historialGuardado = localStorage.getItem("historial");
 const Historial = historialGuardado ? JSON.parse(historialGuardado) : [];
 
@@ -28,14 +28,14 @@ $(window).on("load", function () {
 
 $(document).ready(function () {
   let formateador = new Intl.NumberFormat("es-CL");
-  // -----------------------------------------------------------
-  // ESTADO: array en memoria que es la fuente de verdad
-  // -----------------------------------------------------------
+  // -----
+  // 2. Estado y datos en memoria
+  // -----
   const CONTACTOS = [];
 
-  // -----------------------------------------------------------
-  // VALIDACIÓN: detecta si el contacto ya existe por nombre, alias o número de cuenta
-  // -----------------------------------------------------------
+  // -----
+  // 3. Validación de contactos duplicados
+  // -----
   function buscarDuplicado(nuevoContacto) {
     for (let contacto of CONTACTOS) {
       // estamos aignando y comparando si un alias/numerocuenta ya existe. o sea duplicado
@@ -55,9 +55,9 @@ $(document).ready(function () {
     return null; // No hay duplicado
   }
 
-  // -----------------------------------------------------------
-  // PERSISTENCIA: cargar y guardar en localStorage
-  // -----------------------------------------------------------
+  // -----
+  // 4. Persistencia con localStorage
+  // -----
 
   function cargarContactos() {
     const guardados = localStorage.getItem("contactos");
@@ -73,9 +73,9 @@ $(document).ready(function () {
     localStorage.setItem("contactos", JSON.stringify(CONTACTOS));
   }
 
-  // -----------------------------------------------------------
-  // RENDER: solo lee CONTACTOS y pinta el DOM
-  // -----------------------------------------------------------
+  // -----
+  // 5. Renderizado de contactos
+  // -----
 
   function renderizarContactos() {
     $("#lista-contactos").empty();
@@ -122,15 +122,15 @@ $(document).ready(function () {
     });
   }
 
-  // -----------------------------------------------------------
-  // INICIO: cargar datos y pintar
-  // -----------------------------------------------------------
+  // -----
+  // 6. Inicio de la interfaz
+  // -----
   cargarContactos();
   renderizarContactos();
 
-  // -----------------------------------------------------------
-  // EVENTO: agregar nuevo contacto
-  // -----------------------------------------------------------
+  // -----
+  // 7. Agregar nuevo contacto
+  // -----
   $("#formulario-agregar-contacto").on("submit", function (e) {
     e.preventDefault();
 
@@ -163,9 +163,9 @@ $(document).ready(function () {
     this.reset();
   });
 
-  // -----------------------------------------------------------
-  // EVENTO: buscar contacto existente - buscador inteligente
-  // -----------------------------------------------------------
+  // -----
+  // 8. Buscar contactos existentes
+  // -----
   $(".input-busqueda-contacto").on("keyup", function () {
     /* Capturamos y Convertimos el texto de busqueda a minúsculas */
     const textoBusqueda = this.value.toLowerCase();
@@ -180,17 +180,17 @@ $(document).ready(function () {
       /* Comparamos el nombre del contacto con el texto de busqueda */
       if (nombre.includes(textoBusqueda)) {
         /* usamos show para mostrar el contacto */
-        $(`.item-contacto[data-id="${contacto.id}"]`).show("slow");
+        $(".item-contacto[data-id=\"" + contacto.id + "\"]").show("slow");
       } else {
         /* usamos hide para ocultar el contacto  */
-        $(`.item-contacto[data-id="${contacto.id}"]`).hide("slow");
+        $(".item-contacto[data-id=\"" + contacto.id + "\"]").hide("slow");
       }
     });
   });
 
-  // -----------------------------------------------------------
-  // Eliminar lo del localStorage
-  // -----------------------------------------------------------
+  // -----
+  // 9. Eliminar datos guardados
+  // -----
 
   function eliminarCttGuardados() {
     localStorage.removeItem("contactos");
@@ -207,9 +207,9 @@ $(document).ready(function () {
     location.reload();
   }
 
-  // -----------------------------------------------------------
-  // Historial
-  // -----------------------------------------------------------
+  // -----
+  // 10. Mostrar historial de transacciones
+  // -----
   // Antes del forEach, defines los colores
   function colorPorTipo(tipo) {
     if (tipo === "Deposito") return "fw-bold color-texto-deposito "; // verde
@@ -267,9 +267,9 @@ $(document).ready(function () {
     }
   }
 
-  // -----------------------------------------------------------
-  // EVENTO: transferir dinero y actualizar saldo de menu
-  // -----------------------------------------------------------
+  // -----
+  // 11. Transferir dinero y actualizar saldo
+  // -----
   if ($("#modal-transferencia").length) {
     let contactoSeleccionado = null;
     const modalTransferencia = new bootstrap.Modal( // una vez aquí
@@ -287,7 +287,7 @@ $(document).ready(function () {
       $("#modal-cuenta-contacto").text(contactoSeleccionado.tipocuenta);
 
       let saldo = Number(localStorage.getItem("saldo"));
-      $("#modal-saldo-disponible").text(saldo);
+      $("#modal-saldo-disponible").text(formateador.format(saldo));
 
       modalTransferencia.show(); // siempre la misma instancia
     });

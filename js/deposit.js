@@ -1,112 +1,96 @@
-/* importar la fuction de crear transaccion */
-import { crearTransaccion } from "./transaction.js";
+/*
+ 1. Importar función de transacción
+*/
+import { crearTransaccion } from "./transaction.js"; // trae la función que guarda cada movimiento
 
+// -----
+// 1. Interfaz al cargar la página
+// -----
 $(window).on("load", function () {
-  $("body").addClass("interfaz-lista");
+  $("body").addClass("interfaz-lista"); // agrega clase de estilo al cargar
 });
 
-//documento ready para que se ejecute el codigo despues de que el documento html este listo
+// -----
+// 2. Lógica de depósito y retiro
+// -----
 $(document).ready(function () {
-  // del <-menu---.
-  // Creas el formateador para Chile
-  let formateador = new Intl.NumberFormat("es-CL");
-  /*  guardar el saldo en el localStorage  */
-  let saldoGuardado = localStorage.getItem("saldo");
-  let saldoActual;
+  const formateador = new Intl.NumberFormat("es-CL"); // formatea números en estilo chileno
+  let saldoGuardado = localStorage.getItem("saldo"); // lee saldo del almacenamiento local
+  let saldoActual = saldoGuardado !== null ? Number(saldoGuardado) : 0; // inicializa saldo
 
-  /* si el saldo no esta vacio */
-  if (saldoGuardado !== null) {
-    saldoActual = Number(saldoGuardado);
-  } else {
-    /* si el saldo esta vacio */
-    saldoActual = 0;
-    localStorage.setItem("saldo", saldoActual);
+  if (saldoGuardado === null) {
+    localStorage.setItem("saldo", saldoActual); // guarda saldo inicial si no existe
   }
-  /* mostrar el saldo en la pantalla  */
-  $("#saldoDisponible").text(formateador.format(saldoActual));
 
-  // botones del deposit
+  $("#saldoDisponible").text(formateador.format(saldoActual)); // muestra saldo en pantalla
+
+  function actualizarSaldo(nuevoSaldo) {
+    saldoActual = nuevoSaldo; // actualiza la variable local
+    localStorage.setItem("saldo", saldoActual); // guarda el saldo actualizado
+    $("#saldoDisponible").text(formateador.format(saldoActual)); // actualiza el texto del saldo
+  }
+
+  function limpiarMonto() {
+    $("#monto").val(""); // limpia el campo de monto
+  }
+
+  // -----
+  // 2.1 Depositar saldo
+  // -----
   $("#depositar").click(function () {
-    // Capturar el texto del input y quitarle espacios en blanco de los extremos
-    let montoTexto = $("#monto").val().trim();
+    const montoTexto = $("#monto").val().trim(); // lee el valor del input
+    const montoDeposito = parseInt(montoTexto, 10); // convierte el valor a número entero
 
-    // Convertir el texto a un número entero limpio (Base 10)
-    let montoDeposito = parseInt(montoTexto, 10);
-
-    // Creamos la transaccion de deposito
-    {
-      crearTransaccion("Deposito", montoDeposito);
-    }
-
-    // VALIDACIÓN: Verificar que el usuario ingresó un número real y mayor a cero
     if (isNaN(montoDeposito) || montoDeposito <= 0) {
       alert("Por favor, ingresa un monto válido para Depositar.");
-      return; // Detiene el código aquí si hay un error
+      return;
     }
 
-    saldoActual += Number(montoTexto);
-    // Guardar el nuevo saldo en el localStorage para mantenerlo actualizado
-    localStorage.setItem("saldo", saldoActual);
-
-    // Actualizar la pantalla con los puntos de miles
-    $("#saldoDisponible").text(formateador.format(saldoActual));
-
-    // Limpiar el campo de texto para que quede listo para otra operación
-    $("#monto").val("");
-    // Redirigir a la pantalla principal para ver el saldo actualizado
-    window.location.href = "menu.html";
+    saldoActual += montoDeposito; // suma el depósito al saldo
+    localStorage.setItem("saldo", saldoActual); // guarda el nuevo saldo
+    crearTransaccion("Deposito", montoDeposito); // registra la transacción
+    $("#saldoDisponible").text(formateador.format(saldoActual)); // actualiza el saldo mostrado
+    limpiarMonto(); // borra el campo de monto
+    window.location.href = "menu.html"; // vuelve al menú
   });
 
+  // -----
+  // 2.2 Retirar saldo
+  // -----
   $("#retirar").click(function () {
-    // Capturar el texto del input y quitarle espacios en blanco de los extremos
-    let montoTexto = $("#monto").val().trim();
+    const montoTexto = $("#monto").val().trim(); // lee el valor del input
+    const montoRetiro = parseInt(montoTexto, 10); // convierte el valor a número entero
 
-    // Convertir el texto a un número entero limpio (Base 10)
-    let montoRetiro = parseInt(montoTexto, 10);
-
-    // Si el monto es mayor al saldo actual, mostrar un mensaje de error
-    if (montoRetiro > saldoActual) {
-      alert(
-        `No tienes suficiente saldo para retirar. Actualmente tienes: ${formateador.format(saldoActual)}`,
-      );
-      return; // Detiene el código aqui si hay un error
-    } else {
-      // Creamos la transaccion de retiro
-      {
-        crearTransaccion("Retiro", montoRetiro);
-      }
-    }
-
-    // VALIDACIÓN: Verificar que el usuario ingresó un número real y mayor a cero
     if (isNaN(montoRetiro) || montoRetiro <= 0) {
       alert("Por favor, ingresa un monto válido para Retirar.");
-      return; // Detiene el código aquí si hay un error
+      return;
     }
 
-    saldoActual -= Number(montoTexto);
-    // Guardar el nuevo saldo en el localStorage para mantenerlo actualizado
-    localStorage.setItem("saldo", saldoActual);
+    if (montoRetiro > saldoActual) {
+      alert(`No tienes suficiente saldo para retirar. Actualmente tienes: ${formateador.format(saldoActual)}`);
+      return;
+    }
 
-    // Actualizar la pantalla con los puntos de miles
-    $("#saldoDisponible").text(formateador.format(saldoActual));
-
-    // Limpiar el campo de texto para que quede listo para otra operación
-    $("#monto").val("");
-    // Redirigir a la pantalla principal para ver el saldo actualizado
-    window.location.href = "menu.html";
+    saldoActual -= montoRetiro; // resta el retiro del saldo
+    localStorage.setItem("saldo", saldoActual); // guarda el saldo actualizado
+    crearTransaccion("Retiro", montoRetiro); // registra la transacción
+    $("#saldoDisponible").text(formateador.format(saldoActual)); // muestra el saldo actualizado
+    limpiarMonto(); // borra el campo de monto
+    window.location.href = "menu.html"; // vuelve al menú
   });
-  // Fin botones del deposit
 
-  //del <-menu--- a los diferentes html's --> deposit, sendmoney, transaction.
+  // -----
+  // 3. Navegación del menú
+  // -----
   $("#btn-deposit").on("click", function () {
-    window.location.href = "deposit.html";
-  });
-  $("#btn-send").on("click", function () {
-    window.location.href = "sendmoney.html";
-  });
-  $("#btn-move").on("click", function () {
-    window.location.href = "transactions.html";
+    window.location.href = "deposit.html"; // abre formulario de depósito
   });
 
-  //Fin ---> menu
+  $("#btn-send").on("click", function () {
+    window.location.href = "sendmoney.html"; // abre pantalla de transferencias
+  });
+
+  $("#btn-move").on("click", function () {
+    window.location.href = "transactions.html"; // abre historial de transacciones
+  });
 });

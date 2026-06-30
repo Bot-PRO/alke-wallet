@@ -1,100 +1,69 @@
 <!doctype html>
 <html lang="es">
   <head>
+    <!-- Metadatos básicos -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Menú Principal - Alke Wallet</title>
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/deposit.css" />
-
-    <style>
-      html,
-      body {
-        background: linear-gradient(
-          135deg,
-          #020617 0%,
-          #0f172a 100%
-        ) !important;
-        min-height: 100vh;
-      }
-    </style>
-
-    <!-- Bootstrap -->
+    <!-- Estilos externos -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/deposit.css" />
+
+    <!-- Estilos locales de la página -->
+    <style>
+      html,
+      body {
+        background: linear-gradient(135deg, #020617 0%, #0f172a 100%) !important;
+        min-height: 100vh;
+      }
+    </style>
   </head>
 
-  <body
-    class="d-flex justify-content-center align-items-center min-vh-100 w-100 py-5"
-  >
+  <body class="d-flex justify-content-center align-items-center min-vh-100 w-100 py-5">
     <main class="w-100 d-flex justify-content-center">
-      <div
-        class="div-contenedor-menu rounded-4 mw-100 align-items-center w-sm-100 w-lg-50"
-      >
-        <!-- título con padding -->
+      <div class="div-contenedor-menu rounded-4 mw-100 align-items-center w-sm-100 w-lg-50">
+        <!-- Título -->
         <div class="p-3">
-          <h2 class="text-uppercase text-light text-center mb-3">
-            Menú Principal
-          </h2>
+          <h2 class="text-uppercase text-light text-center mb-3">Menú Principal</h2>
         </div>
 
-        <!-- bloque de saldo disponible-->
-        <section
-          class="seccion-saldoDisponible rounded-3 py-3 px-2 mb-4 mx-2 text-white text-start"
-        >
+        <!-- Saldo disponible -->
+        <section class="seccion-saldoDisponible rounded-3 py-3 px-2 mb-4 mx-2 text-white text-start">
           <p class="text-uppercase small mb-2 opacity-50">Saldo Disponible</p>
           <p class="fs-3 fw-bold mb-0 text-success">
             $<output id="saldoDisponible">0</output>
           </p>
         </section>
 
-        <!-- bloque de botones y link  -->
+        <!-- Botones de navegación -->
         <div class="pb-3">
-          <section
-            class="d-flex justify-content-center align-items-center flex-column gap-2 mb-2 px-2"
-          >
-            <button
-              type="button"
-              id="btn-send"
-              class="btn btn-dark btn-lg text-start w-100"
-            >
+          <section class="d-flex justify-content-center align-items-center flex-column gap-2 mb-2 px-2">
+            <button type="button" id="btn-send" class="btn btn-dark btn-lg text-start w-100">
               📤 Transferir dinero &rarr;
             </button>
-            <button
-              type="button"
-              id="btn-move"
-              class="btn btn-dark btn-lg text-start w-100"
-            >
+            <button type="button" id="btn-move" class="btn btn-dark btn-lg text-start w-100">
               📊 Ver movimientos &rarr;
             </button>
-            <button
-              type="button"
-              id="btn-deposit"
-              class="btn btn-dark btn-lg text-start w-100"
-            >
+            <button type="button" id="btn-deposit" class="btn btn-dark btn-lg text-start w-100">
               📥 Depositar &rarr;
             </button>
           </section>
 
-          <a
-            href="login.html"
-            class="d-flex justify-content-center text-muted small text-decoration-none"
-            >&larr; Volver al login</a
-          >
+          <a href="login.html" class="d-flex justify-content-center text-muted small text-decoration-none">
+            &larr; Volver al login
+          </a>
         </div>
       </div>
     </main>
 
-    <!-- Jquery -->
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- script -->
     <script type="module" src="js/deposit.js"></script>
   </body>
 </html>

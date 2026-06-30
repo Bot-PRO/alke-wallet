@@ -1,32 +1,41 @@
+// -----
+// 1. Interfaz al cargar la página
+// -----
 $(window).on('load', function() {
-    $("body").addClass("interfaz-lista");
+    $("body").addClass("interfaz-lista"); // aplica la clase visual al body
 });
 
-//documento ready para que se ejecute el codigo despues de que el documento html este listo
-$(document).ready(function(){
+// -----
+// 2. Login: validación del formulario
+// -----
+$(document).ready(function() {
+    const CREDENCIALES_VALIDAS = {
+        email: "test@test.com",
+        password: "1234"
+    };
 
-    // enviar formulario, login ---al--> menu
-    $("#enviar-form").on("submit", function(evento){
-        //previene el comportamiento por defecto debe de estar dentro del evento 
-        evento.preventDefault();
+    $("#enviar-form").on("submit", function(evento) {
+        evento.preventDefault(); // evita el envío estándar del formulario
 
-        let email = $("#email").val();
-        let pass = $("#password").val();
+        const email = $("#email").val().trim(); // lee email sin espacios extras
+        const pass = $("#password").val().trim(); // lee contraseña sin espacios extras
 
-        if (email === "" || pass === ""){
+        $("#mensaje-error").text(""); // limpia error de campos vacíos
+        $("#error-usuario-incorrecto").text(""); // limpia error de credenciales
+
+        // 2.1 Validar campos vacíos
+        if (email === "" || pass === "") {
             $("#mensaje-error").text("Por favor completa todos los campos.");
-        }else{
-            //debe de ser or para que compruebe. la logica: si, email o pass son incorrectos
-            //si fuera con and  al ser correcto 1 ya pasaria ya que andamos comparando si son distintos.
-            if (email !== "test@test.com" || pass !== "1234" ){
-                $("#error-usuario-incorrecto").text("El usuario o la contraseña son incorrectos.");
-            }else{
-                //enviar formulario
-                window.location.href = "menu.html";
-                //$("#enviar-form").submit();       
-            }
-        }   
+            return;
+        }
+
+        // 2.2 Validar usuario y contraseña
+        if (email !== CREDENCIALES_VALIDAS.email || pass !== CREDENCIALES_VALIDAS.password) {
+            $("#error-usuario-incorrecto").text("El usuario o la contraseña son incorrectos.");
+            return;
+        }
+
+        // 2.3 Redirigir a menú
+        window.location.href = "menu.html";
     });
-
-
 });
